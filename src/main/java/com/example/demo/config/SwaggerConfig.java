@@ -10,8 +10,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import static springfox.documentation.builders.PathSelectors.*;
-import static com.google.common.base.Predicates.*;
+import static com.google.common.base.Predicates.or;
+import static springfox.documentation.builders.PathSelectors.regex;
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -27,6 +28,7 @@ public class SwaggerConfig {
                 .build()
                 .useDefaultResponseMessages(false);
     }
+
     private ApiInfo usersApiInfo() {
         return new ApiInfoBuilder()
                 .title("Tareas Service ")
@@ -35,7 +37,7 @@ public class SwaggerConfig {
                 .build();
     }
 
-   private Predicate<String> paths() {
+    private Predicate<String> paths() {
 
         return or(
                 regex("/tarea.*"),
