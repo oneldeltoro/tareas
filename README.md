@@ -38,7 +38,7 @@
    "vigente": true
     }'
   
-La configuración por defecto, es la siguiente:
+La configuración por defecto para la base de datos, es la siguiente:
 
 ```yaml
 spring.datasource.url=jdbc:h2:mem:tareas #Ubicacion de la Tabla Tareas
