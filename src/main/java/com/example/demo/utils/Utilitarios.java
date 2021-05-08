@@ -1,9 +1,11 @@
 package com.example.demo.utils;
 
+
+
 import com.example.demo.domains.Tarea;
-import com.example.demo.model.dto.TareaDto;
-import com.google.common.base.Preconditions;
+import com.example.demo.dto.TareaDto;
 import org.springframework.util.ObjectUtils;
+import com.google.common.base.Preconditions;
 
 public class Utilitarios {
     private Utilitarios() {

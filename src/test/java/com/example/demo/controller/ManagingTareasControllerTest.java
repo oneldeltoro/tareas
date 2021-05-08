@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.dto.TareaDto;
+
+import com.example.demo.dto.TareaDto;
 import com.example.demo.repository.TareasRepository;
 import com.example.demo.service.TareaServices;
 import org.junit.jupiter.api.Test;

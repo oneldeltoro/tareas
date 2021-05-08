@@ -1,10 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.domains.Tarea;
-import com.example.demo.model.dto.TareaDto;
 import com.example.demo.repository.TareasRepository;
 import javassist.NotFoundException;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -19,11 +17,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.atLeastOnce;
+
 @ExtendWith(SpringExtension.class)
 @Import({
         TareaServices.class,
@@ -34,6 +30,7 @@ class TareaServicesTest {
     private TareaServices service;
     @MockBean
     private TareasRepository repository;
+
     @Test
     void addTarea() {
         Tarea task = generarTarea();
@@ -54,14 +51,16 @@ class TareaServicesTest {
         assertThat(task.getIdentificador(), notNullValue());
         assertThat(task.getVigente(), notNullValue());
     }
+
     @Test
     void editarTareasNoExist() {
         NotFoundException e = new NotFoundException("No puede modificar una tarea que  no existe");
         Mockito.when(repository.existsById(Mockito.any())).thenReturn(false);
         Mockito.when(repository.save(Mockito.any())).thenReturn(e);
-        Assert.assertTrue(e instanceof NotFoundException);
-        Assert.assertEquals(e.getMessage(), "No puede modificar una tarea que  no existe");
+        assertThat(e, instanceOf(NotFoundException.class));
+        assertThat(e.getMessage(), is(equalTo("No puede modificar una tarea que  no existe")));
     }
+
     @Test
     void listarTareas() {
         List<Tarea> tasks = generarTareas();

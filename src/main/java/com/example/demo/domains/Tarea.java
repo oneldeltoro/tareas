@@ -1,13 +1,11 @@
 package com.example.demo.domains;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -20,6 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ApiOperation(value = "Tarea Modelo")
 public class Tarea {
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)

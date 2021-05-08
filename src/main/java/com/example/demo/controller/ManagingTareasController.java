@@ -1,45 +1,51 @@
 package com.example.demo.controller;
 
-import com.example.demo.assemblers.TareaModeAssembler;
-import com.example.demo.model.dto.TareaDto;
+
+
+import com.example.demo.dto.TareaDto;
 import com.example.demo.service.TareaServices;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping(value = "/v1/tarea", produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/tarea")
+@Api(value = "Microservicio Tarea", description = "Estas API garantizan la manipulacion de las tareas")
 public class ManagingTareasController {
     @Autowired
     TareaServices tareaServices;
 
-    @Autowired(required=true)
-    private TareaModeAssembler tareaModeAssembler;
+    @RequestMapping(value="/heartbeat",method = RequestMethod.GET)
+    @ApiOperation(value = "Obtener estado de salud", notes = "Retorna un mensaje para comprobar el estado de salud del microservicio" )
+    public ResponseEntity<String> heartbeat() {
+        return ResponseEntity.ok("Microservicio Tarea esta en funcionamiento");
+    }
 
-
-    @GetMapping("/all")
-    public ResponseEntity<List<EntityModel<TareaDto>>> getAllTareas() {
+    @RequestMapping(value="/all",method = RequestMethod.GET)
+    @ApiOperation(value = "Obtener listado de tareas", notes = "Retorna unalista de tareas" )
+    public ResponseEntity<List<TareaDto>> getAllTareas() {
         List<TareaDto> tareas = tareaServices.listarTareas();
-        return new ResponseEntity(tareas.stream()
-                .map(gateway -> tareaModeAssembler.toModel(gateway))
-                .collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity(tareas, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<TareaDto>> getTarea(@PathVariable(name = "id") Integer identificador) {
+    @RequestMapping(value="/{id}",method = RequestMethod.GET)
+    @ApiOperation(value = "Obtener tarea", notes = "Retorna una tarea por Id" )
+    public ResponseEntity<TareaDto> getTarea(@PathVariable(name = "id") Integer identificador) {
         TareaDto tarea = tareaServices.getTarea(identificador);
-        return ResponseEntity.ok(tareaModeAssembler.toModel(tarea));
+        return new ResponseEntity(tarea, HttpStatus.OK);
     }
 
-    @PostMapping()
+    @RequestMapping(method=RequestMethod.POST)
+    @ApiOperation(value = "Guardar tarea", notes = "Almacena una tarea" )
     public ResponseEntity postTarea(@RequestBody TareaDto tareaDto) {
         TareaDto stored = tareaServices.addTarea(tareaDto);
         return ResponseEntity
@@ -47,13 +53,16 @@ public class ManagingTareasController {
                 .build();
     }
 
-    @PutMapping()
-    public ResponseEntity<EntityModel<TareaDto>> putTarea(@RequestBody TareaDto tareaDto) {
+    @RequestMapping(method=RequestMethod.PUT)
+    @ApiOperation(value = "Modificar tarea", notes = "Almacena una tarea modificada" )
+    public ResponseEntity<TareaDto> putTarea(@RequestBody TareaDto tareaDto) {
         TareaDto stored = tareaServices.addTarea(tareaDto);
-        return ResponseEntity.ok(tareaModeAssembler.toModel(stored));
+        return new ResponseEntity(stored, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+
+    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+    @ApiOperation(value = "Elimina una tarea", notes = "Elimina una tarea por Id" )
     public ResponseEntity deleteTarea(@PathVariable(name = "id") Integer identificador) {
         tareaServices.deleteTareas(identificador);
         return ResponseEntity.noContent().build();
