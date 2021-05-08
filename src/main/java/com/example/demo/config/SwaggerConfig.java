@@ -23,7 +23,7 @@ public class SwaggerConfig {
                 .apiInfo(usersApiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(paths()) //
+                .paths(paths())
                 .build()
                 .useDefaultResponseMessages(false);
     }
@@ -35,7 +35,7 @@ public class SwaggerConfig {
                 .build();
     }
 
-    private Predicate<String> paths() {
+   private Predicate<String> paths() {
 
         return or(
                 regex("/tarea.*"),
