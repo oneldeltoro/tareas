@@ -55,7 +55,7 @@ public class ManagingTareasController {
         return new ResponseEntity(stored, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.PUT)
     @ApiOperation(value = "Modificar tarea", notes = "Almacena una tarea modificada")
     public ResponseEntity<TareaDto> putTarea(@ApiParam(value = "Datos de la tarea a actualizar", required = true) @RequestBody TareaDto tareaDto) {
         log.debug("invocando servicio para modificar una tarea");

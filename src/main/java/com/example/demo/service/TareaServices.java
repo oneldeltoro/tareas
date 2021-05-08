@@ -26,7 +26,13 @@ public class TareaServices {
 
     public TareaDto addTarea(TareaDto dto) {
         log.info("Almacenando tarea con id: {}", dto.getIdentificador());
-        return convertToTareaDto(tareasRepository.save(convertToTarea(dto)));
+        TareaDto ent=null;
+        try {
+             ent = convertToTareaDto(tareasRepository.save(convertToTarea(dto)));
+        }catch (Exception e){
+            log.error("fallo el almacenamiento");
+        }
+        return ent;
     }
 
     @SneakyThrows

@@ -12,9 +12,8 @@ public class Utilitarios {
     }
 
     public static Tarea convertToTarea(TareaDto elemDto) {
-        Preconditions.checkArgument(elemDto.getIdentificador() == null, "La tarea no puede contener campos vacíos o nulos");
-        Preconditions.checkArgument(elemDto.getDescripcion() == null, "La tarea no puede contener campos vacíos o nulos");
-        Preconditions.checkArgument(elemDto.getVigente() == null, "La tarea no puede contener campos vacíos o nulos");
+        Preconditions.checkArgument(!(elemDto.getIdentificador() <1), "La tarea no puede contener campos vacíos o nulos");
+        Preconditions.checkArgument(!(elemDto.getDescripcion().isEmpty()), "La tarea no puede contener campos vacíos o nulos");
         return Tarea.builder()
                 .identificador(ObjectUtils.isEmpty(elemDto.getIdentificador()) ? null : elemDto.getIdentificador())
                 .descripcion(ObjectUtils.isEmpty(elemDto.getDescripcion()) ? null : elemDto.getDescripcion())
@@ -27,7 +26,7 @@ public class Utilitarios {
         return TareaDto.builder()
                 .identificador(ObjectUtils.isEmpty(elem.getIdentificador()) ? null : elem.getIdentificador())
                 .descripcion(ObjectUtils.isEmpty(elem.getDescripcion()) ? null : elem.getDescripcion())
-                .descripcion(ObjectUtils.isEmpty(elem.getDescripcion()) ? null : elem.getDescripcion())
+                .fechaCreacio(ObjectUtils.isEmpty(elem.getFechaCreacio()) ? null : elem.getFechaCreacio())
                 .vigente(ObjectUtils.isEmpty(elem.getVigente()) ? null : elem.getVigente())
                 .build();
     }

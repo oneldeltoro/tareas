@@ -14,9 +14,6 @@ import java.util.Date;
 @Entity
 @Table(name = "tareas")
 @EqualsAndHashCode
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @ApiOperation(value = "Tarea Modelo")
 public class Tarea {
@@ -35,4 +32,46 @@ public class Tarea {
     Boolean vigente;
 
 
+    public Tarea() {
+
+    }
+
+    public Tarea(@NotBlank Integer identificador, @NotBlank String descripcion, Date fechaCreacio, Boolean vigente) {
+        this.identificador = identificador;
+        this.descripcion = descripcion;
+        this.fechaCreacio = fechaCreacio;
+        this.vigente = vigente;
+    }
+
+    public Integer getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(Integer identificador) {
+        this.identificador = identificador;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Date getFechaCreacio() {
+        return fechaCreacio;
+    }
+
+    public void setFechaCreacio(Date fechaCreacio) {
+        this.fechaCreacio = fechaCreacio;
+    }
+
+    public Boolean getVigente() {
+        return vigente;
+    }
+
+    public void setVigente(Boolean vigente) {
+        this.vigente = vigente;
+    }
 }
